@@ -25,8 +25,12 @@ public class Location {
     @Column(length = 20)
     private String postal_code;
     @Column(length = 80)
-    private String Country;
+    private String country;
     private double latitude;
     private double longitude;
     private boolean deleted = Boolean.FALSE;
+    @OneToOne(mappedBy = "incidentLocation")
+    private Crime crime;
+    @OneToOne(mappedBy = "location")
+    private Criminal criminal;
 }

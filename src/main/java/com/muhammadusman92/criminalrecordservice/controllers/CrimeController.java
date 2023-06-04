@@ -21,9 +21,10 @@ public class CrimeController {
     @Autowired
     private CrimeService crimeService;
     @PostMapping("/")
-    public ResponseEntity<Response> createCrime(@RequestHeader("authorities") String authorities,
+    public ResponseEntity<Response> createCrime(
+//            @RequestHeader("authorities") String authorities,
                                                              @RequestBody CrimeDto crimeDto){
-        if (authorities.contains("POLICE_ADMIN")) {
+//        if (authorities.contains("POLICE_ADMIN")) {
             CrimeDto savedCrime = crimeService.createCrime(crimeDto);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -32,20 +33,20 @@ public class CrimeController {
                     .statusCode(CREATED.value())
                     .data(savedCrime)
                     .build(), CREATED);
-        } else {
-            return new ResponseEntity<>(Response.builder()
-                    .timeStamp(now())
-                    .message("You are not authorized for this service")
-                    .status(FORBIDDEN)
-                    .statusCode(FORBIDDEN.value())
-                    .build(), FORBIDDEN);
-        }
+//        } else {
+//            return new ResponseEntity<>(Response.builder()
+//                    .timeStamp(now())
+//                    .message("You are not authorized for this service")
+//                    .status(FORBIDDEN)
+//                    .statusCode(FORBIDDEN.value())
+//                    .build(), FORBIDDEN);
+//        }
     }
     @PutMapping("/{crimeId}")
     public ResponseEntity<Response> updateCrime(@RequestBody CrimeDto crimeDto,
                                                 @RequestHeader("authorities") String authorities,
                                                 @PathVariable Integer crimeId){
-        if (authorities.contains("POLICE_ADMIN")) {
+//        if (authorities.contains("POLICE_ADMIN")) {
             CrimeDto updateCrime = crimeService.updateCrime(crimeDto,crimeId);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -54,19 +55,19 @@ public class CrimeController {
                     .statusCode(OK.value())
                     .data(updateCrime)
                     .build(),OK);
-        } else {
-            return new ResponseEntity<>(Response.builder()
-                    .timeStamp(now())
-                    .message("You are not authorized for this service")
-                    .status(FORBIDDEN)
-                    .statusCode(FORBIDDEN.value())
-                    .build(), FORBIDDEN);
-        }
+//        } else {
+//            return new ResponseEntity<>(Response.builder()
+//                    .timeStamp(now())
+//                    .message("You are not authorized for this service")
+//                    .status(FORBIDDEN)
+//                    .statusCode(FORBIDDEN.value())
+//                    .build(), FORBIDDEN);
+//        }
     }
-    @DeleteMapping("/{drimeId}")
+    @DeleteMapping("/{crimeId}")
     public ResponseEntity<Response> deleteCrime(@RequestHeader("authorities") String authorities,
                                                 @PathVariable Integer crimeId){
-        if (authorities.contains("POLICE_ADMIN")) {
+//        if (authorities.contains("POLICE_ADMIN")) {
             crimeService.deleteCrime(crimeId);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -74,14 +75,14 @@ public class CrimeController {
                     .status(OK)
                     .statusCode(OK.value())
                     .build(),OK);
-        } else {
-            return new ResponseEntity<>(Response.builder()
-                    .timeStamp(now())
-                    .message("You are not authorized for this service")
-                    .status(FORBIDDEN)
-                    .statusCode(FORBIDDEN.value())
-                    .build(), FORBIDDEN);
-        }
+//        } else {
+//            return new ResponseEntity<>(Response.builder()
+//                    .timeStamp(now())
+//                    .message("You are not authorized for this service")
+//                    .status(FORBIDDEN)
+//                    .statusCode(FORBIDDEN.value())
+//                    .build(), FORBIDDEN);
+//        }
 
     }
     @GetMapping("/criminalId/{criminalId}")
@@ -91,7 +92,7 @@ public class CrimeController {
             @RequestParam(name = "pageSize",defaultValue = AppConstants.PAGE_SIZE,required = false) Integer pageSize,
             @RequestParam(name = "sortBy",defaultValue = AppConstants.SORT_BY,required = false)String sortBy,
             @RequestParam(name = "sortDir",defaultValue = AppConstants.SORT_DIR,required = false)String sortDir){
-        if (authorities.contains("POLICE_USER")) {
+//        if (authorities.contains("POLICE_USER")) {
             PageResponse<CrimeDto> pageResponse = crimeService.getAllCrimesOfCriminal(criminalId,pageNumber,pageSize,sortBy,sortDir);
             return new  ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -100,20 +101,21 @@ public class CrimeController {
                     .statusCode(OK.value())
                     .data(pageResponse)
                     .build(),OK);
-        } else {
-            return new ResponseEntity<>(Response.builder()
-                    .timeStamp(now())
-                    .message("You are not authorized for this service")
-                    .status(FORBIDDEN)
-                    .statusCode(FORBIDDEN.value())
-                    .build(), FORBIDDEN);
-        }
+//        } else {
+//            return new ResponseEntity<>(Response.builder()
+//                    .timeStamp(now())
+//                    .message("You are not authorized for this service")
+//                    .status(FORBIDDEN)
+//                    .statusCode(FORBIDDEN.value())
+//                    .build(), FORBIDDEN);
+//        }
 
     }
     @GetMapping("/{crimeId}")
-    public ResponseEntity<Response> getCrimeById(@RequestHeader("authorities") String authorities,
-                                                 @PathVariable Integer crimeId){
-        if (authorities.contains("POLICE_USER")) {
+    public ResponseEntity<Response> getCrimeById(
+//            @RequestHeader("authorities") String authorities,
+            @PathVariable Integer crimeId){
+//        if (authorities.contains("POLICE_USER")) {
             CrimeDto crimeDto=crimeService.getById(crimeId);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -122,13 +124,13 @@ public class CrimeController {
                     .statusCode(OK.value())
                     .data(crimeDto)
                     .build(),OK);
-        } else {
-            return new ResponseEntity<>(Response.builder()
-                    .timeStamp(now())
-                    .message("You are not authorized for this service")
-                    .status(FORBIDDEN)
-                    .statusCode(FORBIDDEN.value())
-                    .build(), FORBIDDEN);
-        }
+//        } else {
+//            return new ResponseEntity<>(Response.builder()
+//                    .timeStamp(now())
+//                    .message("You are not authorized for this service")
+//                    .status(FORBIDDEN)
+//                    .statusCode(FORBIDDEN.value())
+//                    .build(), FORBIDDEN);
+//        }
     }
 }

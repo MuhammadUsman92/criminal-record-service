@@ -1,19 +1,10 @@
 package com.muhammadusman92.criminalrecordservice.services.impl;
 
 import com.muhammadusman92.criminalrecordservice.config.ConversionDtos;
-import com.muhammadusman92.criminalrecordservice.entity.Crime;
-import com.muhammadusman92.criminalrecordservice.entity.Criminal;
-import com.muhammadusman92.criminalrecordservice.entity.CriminalStatus;
-import com.muhammadusman92.criminalrecordservice.entity.Location;
+import com.muhammadusman92.criminalrecordservice.entity.*;
 import com.muhammadusman92.criminalrecordservice.exception.ResourceNotFoundException;
-import com.muhammadusman92.criminalrecordservice.payload.CrimeDto;
-import com.muhammadusman92.criminalrecordservice.payload.FirDto;
-import com.muhammadusman92.criminalrecordservice.payload.LocationDto;
-import com.muhammadusman92.criminalrecordservice.payload.PageResponse;
-import com.muhammadusman92.criminalrecordservice.repo.CrimeRepo;
-import com.muhammadusman92.criminalrecordservice.repo.CriminalRepo;
-import com.muhammadusman92.criminalrecordservice.repo.CriminalStatusRepo;
-import com.muhammadusman92.criminalrecordservice.repo.LocationRepo;
+import com.muhammadusman92.criminalrecordservice.payload.*;
+import com.muhammadusman92.criminalrecordservice.repo.*;
 import com.muhammadusman92.criminalrecordservice.services.CrimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,14 +27,24 @@ public class CrimeServiceImpl implements CrimeService {
     private CriminalStatusRepo criminalStatusRepo;
     @Autowired
     private LocationRepo locationRepo;
+    @Autowired
+    private FirRepo firRepo;
     @Override
     public CrimeDto createCrime(CrimeDto crimeDto) {
         Crime crime = ConversionDtos.crimeDtoToCrime(crimeDto);
+        Set<Fir> firSet = crimeDto.getFirSet().stream().map(ConversionDtos::firDtoToFir).collect(Collectors.toSet());
         Location location = locationRepo.save(crime.getIncidentLocation());
         crime.getIncidentLocation().setId(location.getId());
+        crime.setFirSet(firSet);
         Crime saveCrime = crimeRepo.save(crime);
-        saveCrime.setIncidentLocation(saveCrime.getIncidentLocation());
-        return ConversionDtos.crimeToCrimeDto(saveCrime);
+        for(Fir fir:firSet){
+            fir.setCrime(crime);
+        }
+        firRepo.saveAll(firSet);
+        CrimeDto crimeDto1 = ConversionDtos.crimeToCrimeDto(saveCrime);
+        crimeDto1.setFirSet(crimeDto.getFirSet());
+        crimeDto1.setIncidentLocation(ConversionDtos.locationToLocationDto(saveCrime.getIncidentLocation()));
+        return crimeDto1;
     }
 
     @Override
@@ -63,6 +64,9 @@ public class CrimeServiceImpl implements CrimeService {
         CrimeDto findCrimeDto = ConversionDtos.crimeToCrimeDto(findCrime);
         Set<FirDto> firDtoSet = findCrime.getFirSet().stream().map(ConversionDtos::firToFirDto).collect(Collectors.toSet());
         findCrimeDto.setFirSet(firDtoSet);
+        List<CriminalStatus> byIdCrimeId = criminalStatusRepo.findByIdCrimeId(crimeId);
+        Set<CriminalDto> criminalDtoSet = byIdCrimeId.stream().map(criminalStatus -> ConversionDtos.criminalDtoToCriminal(criminalStatus.getCriminal())).collect(Collectors.toSet());
+        findCrimeDto.setCriminalDtos(criminalDtoSet);
         return findCrimeDto;
     }
 

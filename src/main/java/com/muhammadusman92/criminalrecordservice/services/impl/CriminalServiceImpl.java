@@ -8,6 +8,7 @@ import com.muhammadusman92.criminalrecordservice.entity.Location;
 import com.muhammadusman92.criminalrecordservice.exception.ResourceNotFoundException;
 import com.muhammadusman92.criminalrecordservice.payload.CrimeDto;
 import com.muhammadusman92.criminalrecordservice.payload.CriminalDto;
+import com.muhammadusman92.criminalrecordservice.payload.CriminalStatusDto;
 import com.muhammadusman92.criminalrecordservice.payload.PageResponse;
 import com.muhammadusman92.criminalrecordservice.repo.CriminalRepo;
 import com.muhammadusman92.criminalrecordservice.repo.LocationRepo;
@@ -42,7 +43,8 @@ public class CriminalServiceImpl implements CriminalService {
         Criminal findCriminal = criminalRepo.findById(criminalId)
                 .orElseThrow(()->new ResourceNotFoundException("Criminal","CriminalId",criminalId));
         Location saveLocation = locationRepo.save(criminal.getLocation());
-        criminal.getLocation().setId(saveLocation.getId());
+        criminal.setLocation(saveLocation);
+        criminal.setCNIC(findCriminal.getCNIC());
         Criminal saveCriminal = criminalRepo.save(criminal);
         return ConversionDtos.criminalDtoToCriminal(saveCriminal);
     }
@@ -51,7 +53,14 @@ public class CriminalServiceImpl implements CriminalService {
     public CriminalDto getById(String criminalId) {
         Criminal findCriminal = criminalRepo.findById(criminalId)
                 .orElseThrow(()->new ResourceNotFoundException("Criminal","CriminalId",criminalId));
-        return ConversionDtos.criminalDtoToCriminal(findCriminal);
+        CriminalDto criminalDto = ConversionDtos.criminalDtoToCriminal(findCriminal);
+        for(CriminalStatus criminalStatus:findCriminal.getCriminalStatuses()){
+            CriminalStatusDto newCriminalStatus = ConversionDtos.criminalStatusTOCriminalStatusDto(criminalStatus);
+            Crime crime = criminalStatus.getCrime();
+            newCriminalStatus.setCrime(ConversionDtos.crimeToCrimeDto(crime));
+            criminalDto.getCriminalStatuses().add(newCriminalStatus);
+        }
+        return criminalDto;
     }
 
     @Override

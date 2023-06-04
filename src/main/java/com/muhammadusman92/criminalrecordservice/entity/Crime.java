@@ -21,7 +21,7 @@ public class Crime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Location incidentLocation;
     private Date incidentDate;
     @Column(length = 100)

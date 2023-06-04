@@ -1,10 +1,7 @@
 package com.muhammadusman92.criminalrecordservice.config;
 
 import com.muhammadusman92.criminalrecordservice.entity.*;
-import com.muhammadusman92.criminalrecordservice.payload.CrimeDto;
-import com.muhammadusman92.criminalrecordservice.payload.CriminalDto;
-import com.muhammadusman92.criminalrecordservice.payload.FirDto;
-import com.muhammadusman92.criminalrecordservice.payload.LocationDto;
+import com.muhammadusman92.criminalrecordservice.payload.*;
 
 public class ConversionDtos {
     public static Crime crimeDtoToCrime(CrimeDto crimeDto){
@@ -75,6 +72,7 @@ public class ConversionDtos {
     }
     public static Location locationDtoToLocation(LocationDto locationDto){
         Location location = new Location();
+        location.setStreet(locationDto.getStreet());
         location.setCity(locationDto.getCity());
         location.setCountry(locationDto.getCountry());
         location.setPostal_code(locationDto.getPostal_code());
@@ -84,6 +82,8 @@ public class ConversionDtos {
     }
     public static LocationDto locationToLocationDto(Location location){
         LocationDto locationDto = new LocationDto();
+        locationDto.setId(location.getId());
+        locationDto.setStreet(location.getStreet());
         locationDto.setCity(location.getCity());
         locationDto.setCountry(location.getCountry());
         locationDto.setPostal_code(location.getPostal_code());
@@ -91,5 +91,18 @@ public class ConversionDtos {
         locationDto.setLongitude(location.getLongitude());
         return locationDto;
     }
-
+    public static CriminalStatus criminalStatusDtoTOCriminalStatus(CriminalStatusDto criminalStatusDto){
+        CriminalStatus criminalStatus = new CriminalStatus();
+        criminalStatus.setArrestDate(criminalStatusDto.getArrestDate());
+        criminalStatus.setDischargeDate(criminalStatusDto.getDischargeDate());
+        criminalStatus.setNumOfDayInJail(criminalStatusDto.getNumOfDayInJail());
+        return criminalStatus;
+    }
+    public static CriminalStatusDto criminalStatusTOCriminalStatusDto(CriminalStatus criminalStatus){
+        CriminalStatusDto criminalStatusDto = new CriminalStatusDto();
+        criminalStatusDto.setArrestDate(criminalStatus.getArrestDate());
+        criminalStatusDto.setDischargeDate(criminalStatus.getDischargeDate());
+        criminalStatusDto.setNumOfDayInJail(criminalStatus.getNumOfDayInJail());
+        return criminalStatusDto;
+    }
 }
