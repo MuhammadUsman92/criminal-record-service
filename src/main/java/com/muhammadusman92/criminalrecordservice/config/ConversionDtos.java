@@ -58,7 +58,6 @@ public class ConversionDtos {
     public static Criminal criminalDtoToCriminal(CriminalDto criminalDto){
         Criminal criminal = new Criminal();
         criminal.setCNIC(criminalDto.getCnic());
-        criminal.setId(criminalDto.getId());
         criminal.setAge(criminalDto.getAge());
         criminal.setGender(Gender.valueOf(criminalDto.getGender()));
         criminal.setLocation(ConversionDtos.locationDtoToLocation(criminalDto.getLocation()));
@@ -68,7 +67,6 @@ public class ConversionDtos {
     public static CriminalDto criminalDtoToCriminal(Criminal criminal){
         CriminalDto criminalDto = new CriminalDto();
         criminalDto.setCnic(criminal.getCNIC());
-        criminalDto.setId(criminal.getId());
         criminalDto.setAge(criminal.getAge());
         criminalDto.setGender(String.valueOf(criminal.getGender()));
         criminalDto.setLocation(ConversionDtos.locationToLocationDto(criminal.getLocation()));

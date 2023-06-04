@@ -41,7 +41,6 @@ public class CriminalServiceImpl implements CriminalService {
         Criminal criminal = ConversionDtos.criminalDtoToCriminal(criminalDto);
         Criminal findCriminal = criminalRepo.findById(criminalId)
                 .orElseThrow(()->new ResourceNotFoundException("Criminal","CriminalId",criminalId));
-        criminal.setId(findCriminal.getId());
         Location saveLocation = locationRepo.save(criminal.getLocation());
         criminal.getLocation().setId(saveLocation.getId());
         Criminal saveCriminal = criminalRepo.save(criminal);
