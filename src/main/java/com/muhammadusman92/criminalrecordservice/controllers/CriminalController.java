@@ -21,9 +21,9 @@ public class CriminalController {
 
     @PostMapping("/")
     public ResponseEntity<Response> createCriminal(
-//            @RequestHeader("authorities") String authorities,
+            @RequestHeader("authorities") String authorities,
                                                    @RequestBody CriminalDto criminalDto) {
-//        if (authorities.contains("POLICE_ADMIN")) {
+        if (authorities.contains("POLICE_ADMIN")) {
         CriminalDto savedCriminal = criminalService.createCriminal(criminalDto);
         return new ResponseEntity<>(Response.builder()
                 .timeStamp(now())
@@ -32,21 +32,21 @@ public class CriminalController {
                 .statusCode(CREATED.value())
                 .data(savedCriminal)
                 .build(), CREATED);
-//        } else {
-//            return new ResponseEntity<>(Response.builder()
-//                    .timeStamp(now())
-//                    .message("You are not authorized for this service")
-//                    .status(FORBIDDEN)
-//                    .statusCode(FORBIDDEN.value())
-//                    .build(), FORBIDDEN);
-//        }
+        } else {
+            return new ResponseEntity<>(Response.builder()
+                    .timeStamp(now())
+                    .message("You are not authorized for this service")
+                    .status(FORBIDDEN)
+                    .statusCode(FORBIDDEN.value())
+                    .build(), FORBIDDEN);
+        }
     }
 
     @GetMapping("/{criminalId}")
     public ResponseEntity<Response> getCriminalById(
-//            @RequestHeader("authorities") String authorities,
+            @RequestHeader("authorities") String authorities,
                                                     @PathVariable String criminalId) {
-//        if (authorities.contains("POLICE_USER")) {
+        if (authorities.contains("POLICE_USER")) {
         CriminalDto criminalDto = criminalService.getById(criminalId);
         return new ResponseEntity<>(Response.builder()
                 .timeStamp(now())
@@ -55,14 +55,14 @@ public class CriminalController {
                 .statusCode(OK.value())
                 .data(criminalDto)
                 .build(), OK);
-//        } else {
-//            return new ResponseEntity<>(Response.builder()
-//                    .timeStamp(now())
-//                    .message("You are not authorized for this service")
-//                    .status(FORBIDDEN)
-//                    .statusCode(FORBIDDEN.value())
-//                    .build(), FORBIDDEN);
-//        }
+        } else {
+            return new ResponseEntity<>(Response.builder()
+                    .timeStamp(now())
+                    .message("You are not authorized for this service")
+                    .status(FORBIDDEN)
+                    .statusCode(FORBIDDEN.value())
+                    .build(), FORBIDDEN);
+        }
 
     }
 }

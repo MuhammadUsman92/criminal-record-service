@@ -31,7 +31,7 @@ public class CriminalStatus {
     Criminal criminal;
 
     private Date arrestDate;
-    private Date DischargeDate;
+    private Date dischargeDate;
     private int numOfDayInJail;
     private boolean deleted = Boolean.FALSE;
 }
