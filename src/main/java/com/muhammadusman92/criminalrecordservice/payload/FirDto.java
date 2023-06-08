@@ -19,7 +19,6 @@ public class FirDto {
     private Date complainantDate;
     private String complainantCategory;
     private String assignedOfficerName;
-    private String status;
     private String incidentReport;
     private String contactNum;
     private String officerCell;

@@ -20,26 +20,26 @@ public class CriminalStatusController {
     private CriminalStatusService criminalStatusService;
     @PostMapping("/criminalId/{criminalId}/crimeId/{crimeId}")
     public ResponseEntity<Response> createCriminalStatus(
-//            @RequestHeader("authorities") String authorities,
+            @RequestHeader("authorities") String authorities,
                                                    @PathVariable String criminalId,
                                                    @PathVariable Integer crimeId,
                                                    @RequestBody CriminalStatusDto criminalStatusDto){
-//        if (authorities.contains("POLICE_ADMIN")) {
+        if (authorities.contains("POLICE_ADMIN")) {
             CriminalStatusDto savedCriminal = criminalStatusService.createCriminalStatus(criminalId,crimeId,criminalStatusDto);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
-                    .message("Crime is successfully created")
+                    .message("Criminal Status is successfully added")
                     .status(CREATED)
                     .statusCode(CREATED.value())
                     .data(savedCriminal)
                     .build(), CREATED);
-//        } else {
-//            return new ResponseEntity<>(Response.builder()
-//                    .timeStamp(now())
-//                    .message("You are not authorized for this service")
-//                    .status(FORBIDDEN)
-//                    .statusCode(FORBIDDEN.value())
-//                    .build(), FORBIDDEN);
-//        }
+        } else {
+            return new ResponseEntity<>(Response.builder()
+                    .timeStamp(now())
+                    .message("You are not authorized for this service")
+                    .status(FORBIDDEN)
+                    .statusCode(FORBIDDEN.value())
+                    .build(), FORBIDDEN);
+        }
     }
 }

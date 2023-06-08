@@ -29,7 +29,8 @@ public class CriminalStatus {
     @MapsId("criminalCNIC")
     @JoinColumn(name = "criminal_CNIC")
     Criminal criminal;
-
+    @Column(length = 100)
+    private String status;
     private Date arrestDate;
     private Date dischargeDate;
     private int numOfDayInJail;

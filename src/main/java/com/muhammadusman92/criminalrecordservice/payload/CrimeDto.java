@@ -17,5 +17,5 @@ public class CrimeDto {
     private Date incidentDate;
     private String type;
     private Set<FirDto> firSet = new HashSet<>();
-    private Set<CriminalDto> criminalDtos = new HashSet<>();
+    private Set<CriminalDto> criminal = new HashSet<>();
 }

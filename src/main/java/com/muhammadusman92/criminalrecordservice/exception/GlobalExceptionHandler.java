@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
                 .status(BAD_REQUEST)
                 .statusCode(BAD_REQUEST.value())
                 .message(ex.getMessage())
-                .build(), OK);
+                .build(), BAD_REQUEST);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Response>  methodArgumentNotValidException(MethodArgumentNotValidException ex){

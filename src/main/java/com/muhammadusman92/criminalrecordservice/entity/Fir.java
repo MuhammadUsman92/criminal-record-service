@@ -28,8 +28,6 @@ public class Fir {
     private String complainantCategory;
     @Column(length = 100)
     private String assignedOfficerName;
-    @Column(length = 80)
-    private String status;
     @Column(length = 100)
     private String incidentReport;
     @Column(length = 20)

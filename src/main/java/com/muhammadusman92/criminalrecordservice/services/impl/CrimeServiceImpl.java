@@ -66,7 +66,7 @@ public class CrimeServiceImpl implements CrimeService {
         findCrimeDto.setFirSet(firDtoSet);
         List<CriminalStatus> byIdCrimeId = criminalStatusRepo.findByIdCrimeId(crimeId);
         Set<CriminalDto> criminalDtoSet = byIdCrimeId.stream().map(criminalStatus -> ConversionDtos.criminalDtoToCriminal(criminalStatus.getCriminal())).collect(Collectors.toSet());
-        findCrimeDto.setCriminalDtos(criminalDtoSet);
+        findCrimeDto.setCriminal(criminalDtoSet);
         return findCrimeDto;
     }
 

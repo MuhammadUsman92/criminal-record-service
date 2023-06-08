@@ -12,8 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 public
 class CriminalStatusDto {
+    private String status;
     private Date arrestDate;
-    private Date DischargeDate;
+    private Date dischargeDate;
     private int numOfDayInJail;
     private CrimeDto crime;
 }

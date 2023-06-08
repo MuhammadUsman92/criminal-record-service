@@ -22,9 +22,9 @@ public class CrimeController {
     private CrimeService crimeService;
     @PostMapping("/")
     public ResponseEntity<Response> createCrime(
-//            @RequestHeader("authorities") String authorities,
-                                                             @RequestBody CrimeDto crimeDto){
-//        if (authorities.contains("POLICE_ADMIN")) {
+           @RequestHeader("authorities") String authorities,
+           @RequestBody CrimeDto crimeDto){
+        if (authorities.contains("POLICE_ADMIN")) {
             CrimeDto savedCrime = crimeService.createCrime(crimeDto);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -33,20 +33,20 @@ public class CrimeController {
                     .statusCode(CREATED.value())
                     .data(savedCrime)
                     .build(), CREATED);
-//        } else {
-//            return new ResponseEntity<>(Response.builder()
-//                    .timeStamp(now())
-//                    .message("You are not authorized for this service")
-//                    .status(FORBIDDEN)
-//                    .statusCode(FORBIDDEN.value())
-//                    .build(), FORBIDDEN);
-//        }
+        } else {
+            return new ResponseEntity<>(Response.builder()
+                    .timeStamp(now())
+                    .message("You are not authorized for this service")
+                    .status(FORBIDDEN)
+                    .statusCode(FORBIDDEN.value())
+                    .build(), FORBIDDEN);
+        }
     }
     @PutMapping("/{crimeId}")
     public ResponseEntity<Response> updateCrime(@RequestBody CrimeDto crimeDto,
                                                 @RequestHeader("authorities") String authorities,
                                                 @PathVariable Integer crimeId){
-//        if (authorities.contains("POLICE_ADMIN")) {
+        if (authorities.contains("POLICE_ADMIN")) {
             CrimeDto updateCrime = crimeService.updateCrime(crimeDto,crimeId);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -55,19 +55,19 @@ public class CrimeController {
                     .statusCode(OK.value())
                     .data(updateCrime)
                     .build(),OK);
-//        } else {
-//            return new ResponseEntity<>(Response.builder()
-//                    .timeStamp(now())
-//                    .message("You are not authorized for this service")
-//                    .status(FORBIDDEN)
-//                    .statusCode(FORBIDDEN.value())
-//                    .build(), FORBIDDEN);
-//        }
+        } else {
+            return new ResponseEntity<>(Response.builder()
+                    .timeStamp(now())
+                    .message("You are not authorized for this service")
+                    .status(FORBIDDEN)
+                    .statusCode(FORBIDDEN.value())
+                    .build(), FORBIDDEN);
+        }
     }
     @DeleteMapping("/{crimeId}")
     public ResponseEntity<Response> deleteCrime(@RequestHeader("authorities") String authorities,
                                                 @PathVariable Integer crimeId){
-//        if (authorities.contains("POLICE_ADMIN")) {
+        if (authorities.contains("POLICE_ADMIN")) {
             crimeService.deleteCrime(crimeId);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
@@ -75,14 +75,14 @@ public class CrimeController {
                     .status(OK)
                     .statusCode(OK.value())
                     .build(),OK);
-//        } else {
-//            return new ResponseEntity<>(Response.builder()
-//                    .timeStamp(now())
-//                    .message("You are not authorized for this service")
-//                    .status(FORBIDDEN)
-//                    .statusCode(FORBIDDEN.value())
-//                    .build(), FORBIDDEN);
-//        }
+        } else {
+            return new ResponseEntity<>(Response.builder()
+                    .timeStamp(now())
+                    .message("You are not authorized for this service")
+                    .status(FORBIDDEN)
+                    .statusCode(FORBIDDEN.value())
+                    .build(), FORBIDDEN);
+        }
 
     }
     @GetMapping("/criminalId/{criminalId}")

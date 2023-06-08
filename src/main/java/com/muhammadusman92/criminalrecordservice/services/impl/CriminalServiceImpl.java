@@ -5,6 +5,7 @@ import com.muhammadusman92.criminalrecordservice.entity.Crime;
 import com.muhammadusman92.criminalrecordservice.entity.Criminal;
 import com.muhammadusman92.criminalrecordservice.entity.CriminalStatus;
 import com.muhammadusman92.criminalrecordservice.entity.Location;
+import com.muhammadusman92.criminalrecordservice.exception.AlreadyExistExeption;
 import com.muhammadusman92.criminalrecordservice.exception.ResourceNotFoundException;
 import com.muhammadusman92.criminalrecordservice.payload.CrimeDto;
 import com.muhammadusman92.criminalrecordservice.payload.CriminalDto;
@@ -31,6 +32,9 @@ public class CriminalServiceImpl implements CriminalService {
     @Override
     public CriminalDto createCriminal(CriminalDto criminalDto) {
         Criminal criminal = ConversionDtos.criminalDtoToCriminal(criminalDto);
+        if(criminalRepo.existsCNIC(criminal.getCNIC())>0){
+            throw new AlreadyExistExeption("CNIC", criminal.getCNIC());
+        }
         Location saveLocation = locationRepo.save(criminal.getLocation());
         criminal.getLocation().setId(saveLocation.getId());
         Criminal saveCriminal = criminalRepo.save(criminal);

@@ -27,10 +27,9 @@ public class ConversionDtos {
         fir.setComplainantDate(firDto.getComplainantDate());
         fir.setComplainantName(firDto.getComplainantName());
         fir.setContactNum(firDto.getContactNum());
-        fir.setOfficerCell(firDto.getAssignedOfficerName());
+        fir.setOfficerCell(firDto.getOfficerCell());
         fir.setIncidentReport(firDto.getIncidentReport());
         fir.setPoliceStationName(firDto.getPoliceStationName());
-        fir.setStatus(firDto.getStatus());
         fir.setDocument_1(firDto.getDocument_1());
         fir.setDocument_2(firDto.getDocument_2());
         return fir;
@@ -43,10 +42,9 @@ public class ConversionDtos {
         firDto.setComplainantDate(fir.getComplainantDate());
         firDto.setComplainantName(fir.getComplainantName());
         firDto.setContactNum(fir.getContactNum());
-        firDto.setOfficerCell(fir.getAssignedOfficerName());
+        firDto.setOfficerCell(fir.getOfficerCell());
         firDto.setIncidentReport(fir.getIncidentReport());
         firDto.setPoliceStationName(fir.getPoliceStationName());
-        firDto.setStatus(fir.getStatus());
         firDto.setDocument_1(fir.getDocument_1());
         firDto.setDocument_2(fir.getDocument_2());
         return firDto;
@@ -93,6 +91,7 @@ public class ConversionDtos {
     }
     public static CriminalStatus criminalStatusDtoTOCriminalStatus(CriminalStatusDto criminalStatusDto){
         CriminalStatus criminalStatus = new CriminalStatus();
+        criminalStatus.setStatus(criminalStatusDto.getStatus());
         criminalStatus.setArrestDate(criminalStatusDto.getArrestDate());
         criminalStatus.setDischargeDate(criminalStatusDto.getDischargeDate());
         criminalStatus.setNumOfDayInJail(criminalStatusDto.getNumOfDayInJail());
@@ -100,6 +99,7 @@ public class ConversionDtos {
     }
     public static CriminalStatusDto criminalStatusTOCriminalStatusDto(CriminalStatus criminalStatus){
         CriminalStatusDto criminalStatusDto = new CriminalStatusDto();
+        criminalStatusDto.setStatus(criminalStatus.getStatus());
         criminalStatusDto.setArrestDate(criminalStatus.getArrestDate());
         criminalStatusDto.setDischargeDate(criminalStatus.getDischargeDate());
         criminalStatusDto.setNumOfDayInJail(criminalStatus.getNumOfDayInJail());
