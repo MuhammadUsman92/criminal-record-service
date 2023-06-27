@@ -28,7 +28,7 @@ public class CrimeController {
             CrimeDto savedCrime = crimeService.createCrime(crimeDto);
             return new ResponseEntity<>(Response.builder()
                     .timeStamp(now())
-                    .message("Crime is successfully created")
+                    .message("Crime is successfully created with crime id "+savedCrime.getId())
                     .status(CREATED)
                     .statusCode(CREATED.value())
                     .data(savedCrime)
