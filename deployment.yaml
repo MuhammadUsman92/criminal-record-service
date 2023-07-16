@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: criminal-service-app
+  labels:
+    app: criminal-service-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: criminal-service-app
+  template:
+    metadata:
+      labels:
+        app: criminal-service-app
+    spec:
+      containers:
+        - name: criminal-service-app
+          image: gcr.io/PROJECT_ID/IMAGE:TAG
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8083

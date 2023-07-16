@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class LocationServiceImpl implements LocationService {
     @Autowired
@@ -33,6 +35,8 @@ public class LocationServiceImpl implements LocationService {
             if (distance <= radiusInDegrees) {
                 CrimeDto crimeDto = ConversionDtos.crimeToCrimeDto(crime);
                 crimeDto.setIncidentLocation(ConversionDtos.locationToLocationDto(crime.getIncidentLocation()));
+                crimeDto.setCriminal(crime.getCriminalStatuses().stream().map(criminalStatus
+                        -> ConversionDtos.criminalDtoToCriminal(criminalStatus.getCriminal())).collect(Collectors.toSet()));
                 crimeDtoList.add(crimeDto);
             }
         }
